@@ -285,3 +285,4 @@ Player::COLOR::Color stcolor(const std::string& str);
 void start(string title);
 bool bfinditem(string name);
 Item* finditem(string name);
+//BBBB

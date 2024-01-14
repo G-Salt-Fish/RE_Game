@@ -315,7 +315,7 @@ bool bfinditem(string name)
 	}
 	return false;
 }
-J Item* finditem(string name)
+Item* finditem(string name)
 {
 	auto t = ItemMap[name];
 	if (t)
