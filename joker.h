@@ -154,6 +154,9 @@ public:
 	Usitem* Ushow(int name);
 
 	void add(Item* item,int come);
+	void sub(Item* item, int come);
+	void show(Item* item);
+	void show(string name);
 	Bag();
 	~Bag();
 };
@@ -285,4 +288,3 @@ Player::COLOR::Color stcolor(const std::string& str);
 void start(string title);
 bool bfinditem(string name);
 Item* finditem(string name);
-//BBBB

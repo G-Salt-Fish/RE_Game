@@ -139,7 +139,7 @@ void Bag::Iadd(Item* item, int come)
 		Ibag.push_back(item);
 		return ;
 	}
-	for (int i = 1; i <= Ibag.size(); i++)
+	for (unsigned int i = 1; i <= Ibag.size(); i++)
 	{
 		Item* dio;
 		dio = Ibag[i - 1];
@@ -234,13 +234,63 @@ Armor* Bag::Ashow(int name)
 }
 void Bag::Uadd(Usitem* usitem, int come)
 {
+	if (Ubag.size() == 0)
+	{
+		Ubag.push_back(usitem);
+		return;
+	}
+	for (unsigned int i = 1; i <= Ubag.size(); i++)
+	{
+		Usitem* dio;
+		dio = dynamic_cast<Usitem*>(Ibag[i - 1]);
+		if (usitem->name.show() == dio->name.show()
+			&& usitem->des.show() == dio->des.show()
+			&& usitem->lv.show() == dio->lv.show()
+			&& usitem->lv.showslv() == dio->lv.showslv())
+		{
+			delete usitem;
+			dio->num.add(come);
+		}
+		else
+		{
+			Ibag.push_back(usitem);
+		}
+	}
 }
 void Bag::Usub(Usitem* usitem, int come)
 {
+	for (unsigned int i = 1; i <= Ubag.size(); i++)
+	{
+		Item* dio;
+		dio = dynamic_cast<Usitem*>(Ubag[i - 1]);
+		if (usitem->name.show() == dio->name.show()
+			&& usitem->des.show() == dio->des.show()
+			&& usitem->lv.show() == dio->lv.show()
+			&& usitem->lv.showslv() == dio->lv.showslv())
+		{
+			if (come >= dio->num.show())
+			{
+				delete dio;
+				if (usitem != dio)
+				{
+					delete usitem;
+				}
+				Ubag.erase(Ubag.begin() + i - 1);
+			}
+			else
+			{
+				if (usitem != dio)
+				{
+					delete usitem;
+				}
+				dio->num.sub(come);
+			}
+		}
+	}
 }
 Usitem* Bag::Ushow(int name)
 {
-	return nullptr;
+	return Ubag[name];
 }
 void Bag::add(Item* item, int come)
 {
@@ -254,6 +304,27 @@ void Bag::add(Item* item, int come)
 	{
 		p.b.Iadd(item, come);
 	}
+	if (item->type == Item::Type::Armor)
+	{
+		Armor* a;
+		a = dynamic_cast<Armor*>(item);
+		p.b.Aadd(a,come);
+	}
+	if (item->type == Item::Type::Usitem)
+	{
+		Usitem* u;
+		u = dynamic_cast<Usitem*>(item);
+		p.b.Uadd(u, come);
+	}
+}
+void Bag::sub(Item* item, int come)
+{
+}
+void Bag::show(Item* item)
+{
+}
+void Bag::show(string name)
+{
 }
 Bag::Bag()
 {
@@ -326,10 +397,7 @@ Item* finditem(string name)
 	{
 		return nullptr;
 	}
-	
-
 }
-//string类转换为Player::COLOR::Color类
 bool Player::NAME::set(string come)
 {
 	name = come;
