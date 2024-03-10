@@ -111,7 +111,6 @@ public:
 	Weapon();
 	~Weapon();
 };
-
 class Armor :public Item
 {
 public:
@@ -123,7 +122,6 @@ public:
 	Armor();
 	~Armor();
 };
-
 class Usitem :public Item
 {
 	virtual void use() = 0;
