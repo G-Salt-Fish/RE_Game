@@ -11,8 +11,9 @@
 #include<utility>
 #include<stdexcept> 
 #include<map>
-#include <string>
-#include <unordered_map>
+#include<string>
+#include<unordered_map>
+#include<sstream>
 
 #define pause system("pause")
 #define cls system("cls")

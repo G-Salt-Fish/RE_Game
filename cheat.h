@@ -8,13 +8,585 @@ void cheat()
 	{
 		cout << endl;
 		cout << '>';
-		string cmd1;
-		cin >> cmd1;
-		if (cmd1 == "exit")
+		string args;
+		vector<string> cmd;
+		getline(cin, args);
+		istringstream iss(args);
+		while (std::getline(iss, args, ' ')) {
+			cmd.push_back(args);
+		}
+		int size = cmd.size();
+		if (size>=1&&cmd[0] == "exit")
 		{
 			return;
 		}
-		else if (cmd1 == "cmd")
+		else if (size >= 1 && cmd[0] == "cmd")
+		{
+			while (true)
+			{
+				cout << ">>";
+				string cmdd;
+				getline(cin, cmdd);
+				if (cmdd == "exit")
+				{
+					break;
+				}
+				const char* cstr = cmdd.c_str();
+				system(cstr);
+			}
+		}
+		else if (size >= 1 && cmd[0] == "color")
+		{
+			if (size >= 2)
+			{
+				Player::COLOR::Color temp;
+				temp = p.color.show();
+				p.color.set(stcolor(cmd[1]));
+				if (p.color.show() != temp)
+				{
+					cout << "操作成功！";
+				}
+				else
+				{
+					cout << "操作失败！";
+				}
+			}
+			else
+			{
+				cout << "请输入对应颜色！";
+			}
+			
+		}
+		else if (size >= 1 && cmd[0] == "player")
+		{
+			if (size >= 2 && cmd[1] == "name")
+			{
+				if (size >= 3 && cmd[2] == "set")
+				{
+					if (size >= 4)
+					{
+						if (p.name.set(cmd[3]))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+				}
+				else if (size >= 3 && cmd[2] == "show")
+				{
+					cout << p.name.show();
+				}
+				else
+				{
+					cout << "命令未找到！";
+				}
+			}
+			else if (size >= 2 && cmd[1] == "atk")
+			{
+				if (size >= 3 && cmd[2] == "set")
+				{
+					if (size >= 4)
+					{
+						if (p.atk.set(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "add")
+				{
+					if (size >= 4)
+					{
+						if (p.atk.add(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "sub")
+				{
+					if (size >= 4)
+					{
+						if (p.atk.sub(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "show")
+				{
+					cout << p.atk.show();
+				}
+				else
+				{
+					cout << "命令未找到！";
+				}
+			}
+			else if (size >= 2 && cmd[1] == "dfs")
+			{
+				if (size >= 3 && cmd[2] == "set")
+				{
+					if (size >= 4)
+					{
+						if (p.dfs.set(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "add")
+				{
+					if (size >= 4)
+					{
+						if (p.dfs.add(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "sub")
+				{
+					if (size >= 4)
+					{
+						if (p.dfs.sub(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "show")
+				{
+					cout << p.dfs.show();
+				}
+				else
+				{
+					cout << "命令未找到！";
+				}
+			}
+			else if (size >= 2 && cmd[1] == "hp")
+			{
+				if (size >= 3 && cmd[2] == "set")
+				{
+					if (size >= 4)
+					{
+						if (p.hp.set(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "setmax")
+				{
+					if (size >= 4)
+					{
+						if (p.hp.setmax(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "add")
+				{
+					if (size >= 4)
+					{
+						if (p.hp.add(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "addmax")
+				{
+					if (size >= 4)
+					{
+						if (p.hp.addmax(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "sub")
+				{
+					if (size >= 4)
+					{
+						if (p.hp.sub(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "submax")
+				{
+					if (size >= 4)
+					{
+						if (p.hp.submax(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "show")
+				{
+					cout << p.hp.show() << endl;
+				}
+				else if (size >= 3 && cmd[2] == "showmax")
+				{
+					cout << p.hp.showmax() << endl;
+				}
+			}
+			else if (size >= 2 && cmd[1] == "lv")
+			{
+				if (size >= 3 && cmd[2] == "set")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.set(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "setxp")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.setxp(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "setmxp")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.setmxp(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "add")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.add(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "addxp")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.addxp(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "addmxp")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.addmxp(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "sub")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.sub(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "subxp")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.subxp(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "submxp")
+				{
+					if (size >= 4)
+					{
+						if (p.lv.submxp(stoi(cmd[3])))
+						{
+							cout << "操作成功！";
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "命令未找到！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "lvupneed")
+				{
+					cout << p.lv.lvupneed() << endl;
+				}
+				else if (size >= 3 && cmd[2] == "lvup")
+				{
+					if (p.lv.lvup())
+					{
+						cout << "升级成功！";
+					}
+					else
+					{
+						cout << "升级失败！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "show")
+				{
+					cout << p.lv.show() << endl;
+				}
+				else if (size >= 3 && cmd[2] == "showxp")
+				{
+					cout << p.lv.showxp() << endl;
+				}
+				else if (size >= 3 && cmd[2] == "showmxp")
+				{
+					cout << p.lv.showmxp() << endl;
+				}
+			}
+			else if (size >= 2 && cmd[1] == "bag")
+			{
+				if (size >= 3 && cmd[2] == "add")
+				{
+					if (size >= 4)
+					{
+						if (bfinditem(cmd[3]))
+						{
+							p.b.add(finditem(cmd[3]), 1);
+						}
+						else
+						{
+							cout << "操作失败！";
+						}
+					}
+					else
+					{
+						cout << "请输入物品名！";
+					}
+				}
+				else if (size >= 3 && cmd[2] == "show")
+				{
+					if (size == 3)
+					{
+
+					}
+				}
+			}
+		}
+		else if (size >= 1 && cmd[0] == "version")
+		{
+			cout << _joker_version;
+		}
+		else
+		{
+			cout << "命令未找到！";
+		}
+	}
+}
+
+void _cheat()
+{
+	ti("控制台");
+	while (true)
+	{
+		cout << endl;
+		cout << '>';
+		string args;
+		vector<string> cmd;
+		getline(cin, args);
+		istringstream iss(args);
+		while (std::getline(iss, args, ' ')) {
+			cmd.push_back(args);
+		}
+		int size = cmd.size();
+		cout << '<';
+		
+		if (cmd[0] == "exit")
+		{
+			return;
+		}
+		else if (cmd[0] == "cmd")
 		{
 			while (true)
 			{
@@ -29,13 +601,11 @@ void cheat()
 				system(cstr);
 			}
 		}
-		else if (cmd1 == "color")
+		else if (cmd[0] == "color")
 		{
-			string cmd2;
-			cin >> cmd2;
 			Player::COLOR::Color temp;
 			temp = p.color.show();
-			p.color.set(stcolor(cmd2));
+			p.color.set(stcolor(cmd[1]));
 			if (p.color.show() != temp)
 			{
 				cout << "操作成功！";
@@ -45,427 +615,11 @@ void cheat()
 				cout << "操作失败！";
 			}
 		}
-		else if (cmd1 == "player")
+		else if (cmd[0] == "player")
 		{
-			string cmd2;
-			cin >> cmd2;
-			if (cmd2 == "name")
-			{
-				string cmd3;
-				cin >> cmd3;
-				if (cmd3 == "set")
-				{
-					string cmd4;
-					cin >> cmd4;
-					if (p.name.set(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "show")
-				{
-					cout << p.name.show();
-				}
-				else
-				{
-					cout << "命令未找到！";
-				}
-			}
-			else if (cmd2 == "atk")
-			{
-				string cmd3;
-				cin >> cmd3;
-				if (cmd3 == "set")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.atk.set(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "add")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.atk.add(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "sub")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.atk.sub(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "show")
-				{
-					cout << p.atk.show();
-				}
-				else
-				{
-					cout << "命令未找到！";
-				}
-			}
-			else if (cmd2 == "dfs")
-			{
-				string cmd3;
-				cin >> cmd3;
-				if (cmd3 == "set")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.dfs.set(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "add")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.dfs.add(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "sub")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.dfs.sub(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "show")
-				{
-					cout << p.dfs.show();
-				}
-				else
-				{
-					cout << "命令未找到！";
-				}
-			}
-			else if (cmd2 == "hp")
-			{
-				string cmd3;
-				if (cmd3 == "set")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.hp.set(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "setmax")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.hp.setmax(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "add")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.hp.add(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "addmax")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.hp.addmax(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "sub")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.hp.sub(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "submax")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.hp.submax(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "show")
-				{
-					cout << p.hp.show() << endl;
-				}
-				else if (cmd3 == "show")
-				{
-					cout << p.hp.showmax() << endl;
-				}
-			}
-			else if (cmd2 == "lv")
-			{
-				string cmd3;
-				cin >> cmd3;
-				if (cmd3 == "set")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.set(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "setxp")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.setxp(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "setmxp")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.setmxp(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "add")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.add(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "addxp")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.addxp(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "addmxp")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.addmxp(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "sub")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.sub(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "sub")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.sub(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "subxp")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.subxp(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "submxp")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.submxp(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "lvupneed")
-				{
-					int cmd4;
-					cin >> cmd4;
-					cout << p.lv.lvupneed() << endl;
-				}
-				else if (cmd3 == "lvup")
-				{
-					int cmd4;
-					cin >> cmd4;
-					if (p.lv.submxp(cmd4))
-					{
-						cout << "操作成功！";
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "show")
-				{
-					cout << p.lv.show() << endl;
-				}
-				else if (cmd3 == "showxp")
-				{
-					cout << p.lv.showxp() << endl;
-				}
-				else if (cmd3 == "showmxp")
-				{
-					cout << p.lv.showmxp() << endl;
-				}
-			}
-			else if (cmd2 == "bag")
-			{
-				string cmd3;
-				cin >> cmd3;
-				if (cmd3 == "add")
-				{
-					string cmd4;
-					cin >> cmd4;
-					if (bfinditem(cmd4))
-					{
-						p.b.add(finditem(cmd4), 1);
 
-					}
-					else
-					{
-						cout << "操作失败！";
-					}
-				}
-				else if (cmd3 == "show")
-				{
-					cout << p.b.Ishow(0)->name.show();
-				}
-			}
 		}
-		else if (cmd1 == "version")
-		{
-			cout << _joker_version;
-		}
-		else
-		{
-			cout << "命令未找到！";
-		}
+		
+		cout << endl;
 	}
 }
