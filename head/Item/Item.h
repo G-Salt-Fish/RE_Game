@@ -6,4 +6,6 @@
 static void All_Item()
 {
 	NEW_ITEM(wood);
+
 }
+C_ITEM(wood);

@@ -137,7 +137,7 @@ void Bag::Iadd(Item* item, int come)
 	if (Ibag.size() == 0)
 	{
 		Ibag.push_back(item);
-		return ;
+		return;
 	}
 	for (unsigned int i = 1; i <= Ibag.size(); i++)
 	{
@@ -191,6 +191,40 @@ void Bag::Isub(Item* item, int come)
 Item* Bag::Ishow(int name)
 {
 	return Ibag[name];
+}
+Item* Bag::Ishow(string name)
+{
+	for (int i = 1; i <= Ibag.size(); i++)
+	{
+		if (Ibag[i - 1]->name.show() == name)
+		{
+			return Ibag[i - 1];
+		}
+	}
+
+	auto it = ItemMap.find(name);
+	if (it != ItemMap.end())
+	{
+		for (int i = 1; i <= Ibag.size(); i++)
+		{
+			string id = Ibag[i - 1]->id;
+			if (id == name)
+			{
+				return Ibag[i - 1];
+			}
+		}
+		return nullptr;
+	}
+	else
+	{
+		return nullptr;
+	}
+
+
+}
+int Bag::Isize()
+{
+	return Ibag.size();
 }
 void Bag::Wadd(Weapon* weapon, int come)
 {
@@ -308,7 +342,7 @@ void Bag::add(Item* item, int come)
 	{
 		Armor* a;
 		a = dynamic_cast<Armor*>(item);
-		p.b.Aadd(a,come);
+		p.b.Aadd(a, come);
 	}
 	if (item->type == Item::Type::Usitem)
 	{
@@ -376,11 +410,11 @@ Player::COLOR::Color stcolor(const string& str)
 bool bfinditem(string name)
 {
 	auto it = ItemMap.find(name);
-	if (it != ItemMap.end()) 
+	if (it != ItemMap.end())
 	{
 		return true;
 	}
-	else 
+	else
 	{
 		return false;
 	}
@@ -456,45 +490,45 @@ int Player::DFS::show()
 	return dfs;
 }
 Player::DFS::DFS() :dfs(0) {}
-bool Player::HP::setmax(int come) 
+bool Player::HP::setmax(int come)
 {
 	mhp = come;
 	return mhp == come;
 }
-bool Player::HP::set(int come) 
+bool Player::HP::set(int come)
 {
 	hp = come;
 	return hp == come;
 }
-bool Player::HP::addmax(int come) 
+bool Player::HP::addmax(int come)
 {
 	int data = mhp;
 	mhp += come;
 	return mhp - come == data;
 }
-bool Player::HP::add(int come) 
+bool Player::HP::add(int come)
 {
 	int data = hp;
 	hp += come;
 	return hp - come == data;
 }
-bool Player::HP::submax(int come) 
+bool Player::HP::submax(int come)
 {
 	int data = mhp;
 	mhp -= come;
 	return mhp + come == data;
 }
-bool Player::HP::sub(int come) 
+bool Player::HP::sub(int come)
 {
 	int data = hp;
 	hp -= come;
 	return hp + come == data;
 }
-int Player::HP::showmax() 
+int Player::HP::showmax()
 {
 	return mhp;
 }
-int Player::HP::show() 
+int Player::HP::show()
 {
 	return hp;
 }
@@ -513,28 +547,28 @@ Player::COLOR::Color Player::COLOR::show()
 	return color;
 }
 Player::COLOR::COLOR() :color(Color::white) {}
-bool Player::LV::set(int come) 
+bool Player::LV::set(int come)
 {
 	lv = come;
 	return lv == come;
 }
-bool Player::LV::setxp(int come) 
+bool Player::LV::setxp(int come)
 {
 	xp = come;
 	return xp == come;
 }
-bool Player::LV::setmxp(int come) 
+bool Player::LV::setmxp(int come)
 {
 	mxp = come;
 	return mxp == come;
 }
-bool Player::LV::add(int come) 
+bool Player::LV::add(int come)
 {
 	int data = lv;
 	lv += come;
 	return lv - come == data;
 }
-bool Player::LV::addxp(int come) 
+bool Player::LV::addxp(int come)
 {
 	int data = xp;
 	xp += come;
@@ -546,60 +580,60 @@ bool Player::LV::addmxp(int come)
 	mxp += come;
 	return mxp - come == data;
 }
-bool Player::LV::sub(int come) 
+bool Player::LV::sub(int come)
 {
 	int data = lv;
 	lv -= come;
 	return lv + come == data;
 }
-bool Player::LV::subxp(int come) 
+bool Player::LV::subxp(int come)
 {
 	int data = xp;
 	xp -= come;
 	return xp + come == data;
 }
-bool Player::LV::submxp(int come) 
+bool Player::LV::submxp(int come)
 {
 	int data = mxp;
 	mxp -= come;
 	return mxp + come == data;
 }
-int Player::LV::lvupneed() 
+int Player::LV::lvupneed()
 {
 	string path = "data\\lvupneednum.ini";
 	fstream f(path, ios::in);
 	int need = 0;
-	for (int i = 1; i <= lv; i++) 
+	for (int i = 1; i <= lv; i++)
 	{
 		f >> need;
 	}
 	f.close();
 	return need;
 }
-bool Player::LV::lvup() 
+bool Player::LV::lvup()
 {
 	bool ifup = false;
 	mxp = lvupneed();
-	if (xp >= mxp) 
+	if (xp >= mxp)
 	{
 		lv++;
 		ifup = true;
 	}
 	return ifup;
 }
-int Player::LV::show() 
+int Player::LV::show()
 {
 	return lv;
 }
-int Player::LV::showlv() 
+int Player::LV::showlv()
 {
 	return show();
 }
-int Player::LV::showxp() 
+int Player::LV::showxp()
 {
 	return xp;
 }
-int Player::LV::showmxp() 
+int Player::LV::showmxp()
 {
 	mxp = lvupneed();
 	return mxp;

@@ -27,7 +27,10 @@ class Bag;
 class Weapon;
 
 #define NEW_ITEM(T) \
-	ItemMap[#T] = []() -> Item* { return new T; };
+	ItemMap[#T] = []() -> Item* { return new T; }; 
+
+#define C_ITEM(T) \
+	string T::id = #T;
 
 extern map<string, Item* (*)()> ItemMap;
 
@@ -47,7 +50,9 @@ public:
 	friend class Bag;
 private:
 	Type type;
+	
 public:
+	static string id;
 	class NAME
 	{
 	private:
@@ -98,7 +103,7 @@ public:
 	}num;//物品数量  
 
 	virtual Type typeshow();
-
+	
 	Item();
 };
 class Weapon :public Item
@@ -139,6 +144,8 @@ public:
 	void Iadd(Item* item, int come);
 	void Isub(Item* item, int come);
 	Item* Ishow(int name);
+	Item* Ishow(string name);
+	int Isize();
 
 	void Wadd(Weapon* weapon, int come);
 	void Wsub(Weapon* weapon);

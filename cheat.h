@@ -16,7 +16,7 @@ void cheat()
 			cmd.push_back(args);
 		}
 		int size = cmd.size();
-		if (size>=1&&cmd[0] == "exit")
+		if (size >= 1 && cmd[0] == "exit")
 		{
 			return;
 		}
@@ -55,7 +55,7 @@ void cheat()
 			{
 				cout << "请输入对应颜色！";
 			}
-			
+
 		}
 		else if (size >= 1 && cmd[0] == "player")
 		{
@@ -326,11 +326,11 @@ void cheat()
 				}
 				else if (size >= 3 && cmd[2] == "show")
 				{
-					cout << p.hp.show() << endl;
+					cout << p.hp.show();
 				}
 				else if (size >= 3 && cmd[2] == "showmax")
 				{
-					cout << p.hp.showmax() << endl;
+					cout << p.hp.showmax();
 				}
 			}
 			else if (size >= 2 && cmd[1] == "lv")
@@ -514,15 +514,15 @@ void cheat()
 				}
 				else if (size >= 3 && cmd[2] == "show")
 				{
-					cout << p.lv.show() << endl;
+					cout << p.lv.show();
 				}
 				else if (size >= 3 && cmd[2] == "showxp")
 				{
-					cout << p.lv.showxp() << endl;
+					cout << p.lv.showxp();
 				}
 				else if (size >= 3 && cmd[2] == "showmxp")
 				{
-					cout << p.lv.showmxp() << endl;
+					cout << p.lv.showmxp();
 				}
 			}
 			else if (size >= 2 && cmd[1] == "bag")
@@ -549,7 +549,32 @@ void cheat()
 				{
 					if (size == 3)
 					{
+						cout << "普通" << endl;
+						if (p.b.Isize() <= 0)
+						{
+							cout << "无物品！" << endl;
+						}
+						else
+						{
+							for (int i = 1; i <= p.b.Isize(); i++)
+							{
+								cout << p.b.Ishow(i - 1)->name.show() << '\n';
+							}
+						}
 
+					}
+					else if (size == 4)
+					{
+						if (p.b.Ishow(cmd[3]) != nullptr)
+						{
+							Item* i;
+							i = p.b.Ishow(cmd[3]);
+							cout << "物品名：" << i->name.show() << '\n'
+								<< "描述：" << i->des.show() << '\n'
+								<< "数量：" << i->num.show() << '\n'
+								<< "物品等级：" << i->lv.show() << '\n'
+								<< "使用等级：" << i->lv.showslv();
+						}
 					}
 				}
 			}
@@ -562,64 +587,5 @@ void cheat()
 		{
 			cout << "命令未找到！";
 		}
-	}
-}
-
-void _cheat()
-{
-	ti("控制台");
-	while (true)
-	{
-		cout << endl;
-		cout << '>';
-		string args;
-		vector<string> cmd;
-		getline(cin, args);
-		istringstream iss(args);
-		while (std::getline(iss, args, ' ')) {
-			cmd.push_back(args);
-		}
-		int size = cmd.size();
-		cout << '<';
-		
-		if (cmd[0] == "exit")
-		{
-			return;
-		}
-		else if (cmd[0] == "cmd")
-		{
-			while (true)
-			{
-				cout << ">>";
-				string cmd2;
-				getline(cin, cmd2);
-				if (cmd2 == "exit")
-				{
-					break;
-				}
-				const char* cstr = cmd2.c_str();
-				system(cstr);
-			}
-		}
-		else if (cmd[0] == "color")
-		{
-			Player::COLOR::Color temp;
-			temp = p.color.show();
-			p.color.set(stcolor(cmd[1]));
-			if (p.color.show() != temp)
-			{
-				cout << "操作成功！";
-			}
-			else
-			{
-				cout << "操作失败！";
-			}
-		}
-		else if (cmd[0] == "player")
-		{
-
-		}
-		
-		cout << endl;
 	}
 }
