@@ -14,11 +14,21 @@
 #include<string>
 #include<unordered_map>
 #include<sstream>
+#include<cctype>
+#include<algorithm>
 
 #define pause system("pause")
 #define cls system("cls")
-
-using namespace std;
+using Unint = unsigned int;
+using std::cin;
+using std::cout;
+using std::string;
+using std::map;
+using std::vector;
+using std::fstream;
+using std::ios;
+using std::endl;
+using std::istringstream;
 
 const string _joker_version{ "1.0.0.0" };
 class Player;
@@ -30,20 +40,22 @@ class Weapon;
 	ItemMap[#T] = []() -> Item* { return new T; }; 
 
 #define C_ITEM(T) \
-	string T::id = #T;
+	 id = #T;
 
 extern map<string, Item* (*)()> ItemMap;
 
 class Item
 {
 public:
-	enum class Type 
+	enum class Type
 	{
-		Item=1,
-		Weapon=2,
-		Armor=3,
-		Usitem=4
+		Item = 1,
+		Weapon = 2,
+		Armor = 3,
+		Usitem = 4
+		
 	};
+	string TypeToString();
 	friend class Weapon;
 	friend class Usitem;
 	friend class Armor;
@@ -52,7 +64,7 @@ private:
 	Type type;
 	
 public:
-	static string id;
+	string id;
 	class NAME
 	{
 	private:
@@ -150,6 +162,8 @@ public:
 	void Wadd(Weapon* weapon, int come);
 	void Wsub(Weapon* weapon);
 	Weapon* Wshow(int name);
+	Weapon* Wshow(string name);
+	int Wsize();
 
 	void Aadd(Armor* armor, int come);
 	void Asub(Armor* armor);
@@ -163,6 +177,7 @@ public:
 	void sub(Item* item, int come);
 	void show(Item* item);
 	void show(string name);
+
 	Bag();
 	~Bag();
 };
@@ -294,3 +309,4 @@ Player::COLOR::Color stcolor(const std::string& str);
 void start(string title);
 bool bfinditem(string name);
 Item* finditem(string name);
+bool isnumber(string str);

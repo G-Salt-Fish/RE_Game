@@ -545,6 +545,32 @@ void cheat()
 						cout << "请输入物品名！";
 					}
 				}
+				if (size >= 3 && cmd[2] == "sub")
+				{
+					if (size >= 4)
+					{
+						if (bfinditem(cmd[3]))
+						{
+							Item::Type type;
+							type = finditem(cmd[3])->typeshow();
+							switch (type)
+							{
+							case Item::Type::Item:
+								p.b.Isub(p.b.Ishow(cmd[3]), 1);
+								break;
+							case Item::Type::Weapon:
+								p.b.Wsub(p.b.Wshow(cmd[3]));
+								break;
+							case Item::Type::Armor:
+								break;
+							case Item::Type::Usitem:
+								break;
+							default:
+								break;
+							}
+						}
+					}
+				}
 				else if (size >= 3 && cmd[2] == "show")
 				{
 					if (size == 3)
@@ -558,22 +584,83 @@ void cheat()
 						{
 							for (int i = 1; i <= p.b.Isize(); i++)
 							{
-								cout << p.b.Ishow(i - 1)->name.show() << '\n';
+								cout << p.b.Ishow(i - 1)->name.show() << '(' << p.b.Ishow(i - 1)->id << ')' << p.b.Ishow(i - 1)->num.show() << '\n';
 							}
 						}
+						cout << "武器" << endl;
+						if (p.b.Wsize() <= 0)
+						{
+							cout << "无武器！" << endl;
+						}
+						else
+						{
+							for (int i = 1; i <= p.b.Wsize(); i++)
+							{
+								cout << p.b.Wshow(i - 1)->name.show() << '(' << p.b.Wshow(i - 1)->id << ')' << '\n';
 
+							}
+						}
 					}
 					else if (size == 4)
 					{
-						if (p.b.Ishow(cmd[3]) != nullptr)
+
+
+						Item::Type type;
+						type = finditem(cmd[3])->typeshow();
+						switch (type)
 						{
-							Item* i;
-							i = p.b.Ishow(cmd[3]);
-							cout << "物品名：" << i->name.show() << '\n'
-								<< "描述：" << i->des.show() << '\n'
-								<< "数量：" << i->num.show() << '\n'
-								<< "物品等级：" << i->lv.show() << '\n'
-								<< "使用等级：" << i->lv.showslv();
+						case Item::Type::Item:
+						{
+							if (p.b.Ishow(cmd[3]) != nullptr)
+							{
+								Item* i;
+								i = p.b.Ishow(cmd[3]);
+								cout << "物品名：" << i->name.show() << '\n'
+									<< "描述：" << i->des.show() << '\n'
+									<< "数量：" << i->num.show() << '\n'
+									<< "物品等级：" << i->lv.show() << '\n'
+									<< "使用等级：" << i->lv.showslv();
+							}
+							else
+							{
+								cout << "未找到物品！" << endl;;
+							}
+						}
+						break;
+						case Item::Type::Weapon:
+						{
+							if (p.b.Wshow(cmd[3]) != nullptr)
+							{
+								Weapon* i;
+								i = p.b.Wshow(cmd[3]);
+								cout << "武器名：" << i->name.show() << '\n'
+									<< "描述：" << i->des.show() << '\n'
+									<< "攻击力：" << i->atk << '\n'
+									<< "武器等级：" << i->lv.show() << '\n'
+									<< "使用等级：" << i->lv.showslv() << endl;
+							}
+							else
+							{
+								cout << "未找到物品！" << endl;
+							}
+						}
+						break;
+						case Item::Type::Armor:
+							break;
+						case Item::Type::Usitem:
+							break;
+						default:
+							break;
+						}
+
+
+
+					}
+					else if (size == 5)
+					{
+						if (cmd[3] == "Item")
+						{
+
 						}
 					}
 				}

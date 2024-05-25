@@ -124,6 +124,27 @@ Item::NUM::NUM()
 {
 	num = 1;
 }
+string Item::TypeToString()
+{
+	switch (type)
+	{
+	case Item::Type::Item:
+		return "Item";
+		break;
+	case Item::Type::Weapon:
+		return "Weapon";
+		break;
+	case Item::Type::Armor:
+		return "Armor";
+		break;
+	case Item::Type::Usitem:
+		return "Usitem";
+		break;
+	default:
+		return "null";
+		break;
+	}
+}
 Item::Type Item::typeshow()
 {
 	return type;
@@ -157,7 +178,7 @@ void Bag::Iadd(Item* item, int come)
 		}
 	}
 }
-void Bag::Isub(Item* item, int come)
+void Bag::Isub(Item* item, int come = 1)
 {
 	for (unsigned int i = 1; i <= Ibag.size(); i++)
 	{
@@ -194,7 +215,12 @@ Item* Bag::Ishow(int name)
 }
 Item* Bag::Ishow(string name)
 {
-	for (int i = 1; i <= Ibag.size(); i++)
+	if (isnumber(name))
+	{
+		return Ibag[stoi(name)];
+	}
+
+	for (unsigned int i = 1; i <= Ibag.size(); i++)
 	{
 		if (Ibag[i - 1]->name.show() == name)
 		{
@@ -205,7 +231,7 @@ Item* Bag::Ishow(string name)
 	auto it = ItemMap.find(name);
 	if (it != ItemMap.end())
 	{
-		for (int i = 1; i <= Ibag.size(); i++)
+		for (unsigned int i = 1; i <= Ibag.size(); i++)
 		{
 			string id = Ibag[i - 1]->id;
 			if (id == name)
@@ -244,7 +270,39 @@ void Bag::Wsub(Weapon* weapon)
 }
 Weapon* Bag::Wshow(int name)
 {
-	return nullptr;
+	return Wbag[name];
+}
+Weapon* Bag::Wshow(string name)
+{
+	for (unsigned int i = 1; i <= Wbag.size(); i++)
+	{
+		if (Wbag[i - 1]->name.show() == name)
+		{
+			return Wbag[i - 1];
+		}
+	}
+
+	auto it = ItemMap.find(name);
+	if (it != ItemMap.end())
+	{
+		for (unsigned int i = 1; i <= Wbag.size(); i++)
+		{
+			string id = Wbag[i - 1]->id;
+			if (id == name)
+			{
+				return Wbag[i - 1];
+			}
+		}
+		return nullptr;
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+int Bag::Wsize()
+{
+	return Wbag.size();
 }
 void Bag::Aadd(Armor* armor, int come)
 {
@@ -353,6 +411,7 @@ void Bag::add(Item* item, int come)
 }
 void Bag::sub(Item* item, int come)
 {
+
 }
 void Bag::show(Item* item)
 {
@@ -383,6 +442,7 @@ Bag::~Bag()
 		delete item;
 	}
 }
+
 Player::COLOR::Color stcolor(const string& str)
 {
 	static map<string, Player::COLOR::Color> enumMap =
@@ -431,6 +491,17 @@ Item* finditem(string name)
 	{
 		return nullptr;
 	}
+}
+bool isnumber(string str)
+{
+	if (str.empty())
+	{
+		return false;
+	}
+	return std::all_of(str.begin(), str.end(), [](unsigned char c) 
+		{
+			return std::isdigit(c);
+		});
 }
 bool Player::NAME::set(string come)
 {

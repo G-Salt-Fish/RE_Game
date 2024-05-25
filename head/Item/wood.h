@@ -10,5 +10,6 @@ public:
 		lv.set(1);
 		lv.setslv(1);
 		num.set(1);
+		C_ITEM(wood);
 	}
 };

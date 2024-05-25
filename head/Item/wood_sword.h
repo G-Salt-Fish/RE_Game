@@ -24,5 +24,6 @@ public:
 		lv.setslv(1);
 		num.set(1);
 		atk = 2;
+		C_ITEM(wood_sword);
 	}
 };
