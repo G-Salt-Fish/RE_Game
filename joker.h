@@ -35,6 +35,7 @@ class Player;
 class Item;
 class Bag;
 class Weapon;
+class Event;
 
 #define NEW_ITEM(T) \
 	ItemMap[#T] = []() -> Item* { return new T; }; 
@@ -44,6 +45,18 @@ class Weapon;
 
 extern map<string, Item* (*)()> ItemMap;
 
+class Event
+{
+private:
+	vector<void(*)()> event;
+public:
+	Event();
+	~Event();
+};//抽象类，之后要具体化 -> 要有实例
+/*
+	get Item -> Item去注册进对应的事件
+	get into water_town -> call Item.updata();
+*/
 class Item
 {
 public:
@@ -115,6 +128,8 @@ public:
 	}num;//物品数量  
 
 	virtual Type typeshow();
+
+	void updata();
 	
 	Item();
 };
@@ -133,7 +148,7 @@ class Armor :public Item
 {
 public:
 	int dfs;
-	bool ifon;
+	bool ifon;//是否装备
 	virtual void on() = 0;
 	virtual void down() = 0;
 	virtual void fight() = 0;
@@ -295,12 +310,17 @@ public:
 		int show();
 		MONEY();
 	}mon;//金钱 
+
 	class GEAR
 	{
 	private:
 		int gear;
 		int maxgear;
-	};//装备数量
+	public:
+		GEAR();
+	}gear;//装备数量
+
+	
 	Player();
 };
 extern Player p;

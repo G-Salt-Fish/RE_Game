@@ -13,7 +13,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="资源文件\Item">
+    <Filter Include="头文件\Item">
       <UniqueIdentifier>{34b6d676-7982-4ac1-94ae-8d71b5b620b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -33,16 +33,19 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="head\Item\Item.h">
-      <Filter>资源文件\Item</Filter>
+      <Filter>头文件\Item</Filter>
     </ClInclude>
     <ClInclude Include="head\Item\wood_sword.h">
-      <Filter>资源文件\Item</Filter>
+      <Filter>头文件\Item</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="head\Item\wood.h">
-      <Filter>资源文件\Item</Filter>
+      <Filter>头文件\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="head\Item\aromor.h">
+      <Filter>头文件\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

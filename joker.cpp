@@ -149,6 +149,9 @@ Item::Type Item::typeshow()
 {
 	return type;
 }
+void Item::updata()
+{
+}
 Item::Item()
 {
 	type = Item::Type::Item;
@@ -732,6 +735,7 @@ int Player::MONEY::show()
 }
 Player::MONEY::MONEY() :mon(0) {}
 Player::LV::LV() : lv(1), xp(0), mxp(10) {}
+Player::GEAR::GEAR() : gear(0),maxgear(6) {}
 Player::Player() {}
 void ti(string come)
 {
