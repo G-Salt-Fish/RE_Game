@@ -16,6 +16,12 @@
     <Filter Include="头文件\Item">
       <UniqueIdentifier>{34b6d676-7982-4ac1-94ae-8d71b5b620b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Place">
+      <UniqueIdentifier>{9a50fd7e-ec97-49e0-b6ef-a82e536c121e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Event">
+      <UniqueIdentifier>{408e10f8-88c6-4ac4-a413-ec984c1b126d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RE_Game.cpp">
@@ -35,7 +41,7 @@
     <ClInclude Include="head\Item\Item.h">
       <Filter>头文件\Item</Filter>
     </ClInclude>
-    <ClInclude Include="head\Item\wood_sword.h">
+    <ClInclude Include="head\Item\Weapon.h">
       <Filter>头文件\Item</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -44,8 +50,17 @@
     <ClInclude Include="head\Item\wood.h">
       <Filter>头文件\Item</Filter>
     </ClInclude>
-    <ClInclude Include="head\Item\aromor.h">
+    <ClInclude Include="head\Item\Aromor.h">
       <Filter>头文件\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="head\Place\place.h">
+      <Filter>头文件\Place</Filter>
+    </ClInclude>
+    <ClInclude Include="head\Item\Usitem.h">
+      <Filter>头文件\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="head\Event\Event.h">
+      <Filter>头文件\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,8 @@
 #include<cctype>
 #include<algorithm>
 
+#include "head\Place\place.h"
+
 #define pause system("pause")
 #define cls system("cls")
 using Unint = unsigned int;
@@ -36,6 +38,7 @@ class Item;
 class Bag;
 class Weapon;
 class Event;
+class Place;
 
 #define NEW_ITEM(T) \
 	ItemMap[#T] = []() -> Item* { return new T; }; 
@@ -44,6 +47,10 @@ class Event;
 	 id = #T;
 
 extern map<string, Item* (*)()> ItemMap;
+
+extern map<string, Item* (*)()> ItemNameMap;
+
+
 
 class Event
 {
@@ -57,6 +64,24 @@ public:
 	get Item -> Item去注册进对应的事件
 	get into water_town -> call Item.updata();
 */
+
+class Place
+{
+private:
+	Place* father;
+	vector<Place*> son;
+	Event event;
+public:
+	bool set_father(Place*);
+	bool add(Place*);
+	bool sub(Place*);
+	/*virtual void enter();
+	virtual void leave();*/
+	Place();
+	Place(Place* F, vector<Place*> S);
+	~Place();
+};
+
 class Item
 {
 public:
@@ -129,7 +154,7 @@ public:
 
 	virtual Type typeshow();
 
-	void updata();
+	virtual void updata();
 	
 	Item();
 };
@@ -138,9 +163,11 @@ class Weapon :public Item
 public:
 	int atk;
 	bool ifon;//是否装备
-	virtual void on() = 0;
-	virtual void down() = 0;
-	virtual void fight() = 0;
+	virtual void on(Player*) = 0;//装备
+	virtual void down(Player*) = 0;//卸下
+	virtual void fightstart() = 0;//战斗开始
+	virtual void fightupdate() = 0;//战斗每回合更新
+	virtual void fightend() = 0;//战斗结束
 	Weapon();
 	~Weapon();
 };
@@ -149,15 +176,18 @@ class Armor :public Item
 public:
 	int dfs;
 	bool ifon;//是否装备
-	virtual void on() = 0;
-	virtual void down() = 0;
-	virtual void fight() = 0;
+	virtual void on() = 0;//装备
+	virtual void down() = 0;//卸下
+	virtual void fightstart() = 0;//战斗开始
+	virtual void fightupdate() = 0;//战斗每回合更新
+	virtual void fightend() = 0;//战斗结束
 	Armor();
 	~Armor();
 };
 class Usitem :public Item
 {
-	virtual void use() = 0;
+public:
+	virtual void use(Player*) = 0;
 	Usitem();
 };
 class Bag
@@ -183,15 +213,18 @@ public:
 	void Aadd(Armor* armor, int come);
 	void Asub(Armor* armor);
 	Armor* Ashow(int name);
+	Armor* Ashow(string name);
+	int Asize();
 
 	void Uadd(Usitem* usitem, int come);
 	void Usub(Usitem* usitem, int come);
 	Usitem* Ushow(int name);
+	Usitem* Ushow(string name);
+	int Usize();
 
 	void add(Item* item,int come);
 	void sub(Item* item, int come);
-	void show(Item* item);
-	void show(string name);
+	Item* show(string name);
 
 	Bag();
 	~Bag();
@@ -327,6 +360,6 @@ extern Player p;
 void ti(string come);
 Player::COLOR::Color stcolor(const std::string& str);
 void start(string title);
-bool bfinditem(string name);
-Item* finditem(string name);
+bool bfinditem(string name);//查找物品是否在数据库中
+Item* finditem(string name);//返回物品在数据库中的指针
 bool isnumber(string str);

@@ -325,7 +325,40 @@ void Bag::Asub(Armor* armor)
 }
 Armor* Bag::Ashow(int name)
 {
-	return nullptr;
+	return Abag[name];
+}
+Armor* Bag::Ashow(string name)
+{
+	for (unsigned int i = 1; i <= Abag.size(); i++)
+	{
+		if (Abag[i - 1]->name.show() == name)
+		{
+			return Abag[i - 1];
+		}
+	}
+
+	auto it = ItemMap.find(name);
+	if (it != ItemMap.end())
+	{
+		for (unsigned int i = 1; i <= Abag.size(); i++)
+		{
+			string id = Abag[i - 1]->id;
+			if (id == name)
+			{
+				return Abag[i - 1];
+			}
+		}
+		return nullptr;
+	}
+	else
+	{
+		return nullptr;
+	}
+
+}
+int Bag::Asize()
+{
+	return Abag.size();
 }
 void Bag::Uadd(Usitem* usitem, int come)
 {
@@ -387,6 +420,41 @@ Usitem* Bag::Ushow(int name)
 {
 	return Ubag[name];
 }
+Usitem* Bag::Ushow(string name)
+{
+	for (unsigned int i = 1; i <= Ubag.size(); i++)
+	{
+		if (Ubag[i - 1]->name.show() == name)
+		{
+			return Ubag[i - 1];
+		}
+	}
+
+	auto it = ItemMap.find(name);
+	if (it != ItemMap.end())
+	{
+		for (unsigned int i = 1; i <= Ubag.size(); i++)
+		{
+			string id = Ubag[i - 1]->id;
+			if (id == name)
+			{
+				return Ubag[i - 1];
+			}
+		}
+		return nullptr;
+	}
+	else
+	{
+		return nullptr;
+	}
+
+
+	return nullptr;
+}
+int Bag::Usize()
+{
+	return Ubag.size();
+}
 void Bag::add(Item* item, int come)
 {
 	if (item->type == Item::Type::Weapon)
@@ -416,11 +484,31 @@ void Bag::sub(Item* item, int come)
 {
 
 }
-void Bag::show(Item* item)
+Item* Bag::show(string name)
 {
-}
-void Bag::show(string name)
-{
+	if (isnumber(name))
+	{
+		return nullptr;
+	}
+
+	//从背包中通过名称查找物品
+	if (p.b.Ishow(name) != nullptr)
+	{
+		return p.b.Ishow(name);
+	}
+	else if (p.b.Wshow(name) != nullptr)
+	{
+		return p.b.Wshow(name);
+	}
+	else if (p.b.Ashow(name) != nullptr)
+	{
+		return p.b.Ashow(name);
+	}
+	else if (p.b.Ushow(name) != nullptr)
+	{
+		return p.b.Ushow(name);
+	}
+	return nullptr;
 }
 Bag::Bag()
 {
@@ -470,7 +558,7 @@ Player::COLOR::Color stcolor(const string& str)
 		return Player::COLOR::Color::white;
 	}
 }
-bool bfinditem(string name)
+bool bfinditem(string name) 
 {
 	auto it = ItemMap.find(name);
 	if (it != ItemMap.end())
@@ -494,6 +582,40 @@ Item* finditem(string name)
 	{
 		return nullptr;
 	}
+}
+Item* bagfinditem(string name)
+{
+	//从背包中通过名称查找物品
+	for (unsigned int i = 1; i <= p.b.Isize(); i++)
+	{
+		if (p.b.Ishow(i)->name.show() == name)
+		{
+			return p.b.Ishow(i);
+		}
+	}
+	for (unsigned int i = 1; i <= p.b.Wsize(); i++)
+	{
+		if (p.b.Wshow(i)->name.show() == name)
+		{
+			return p.b.Wshow(i);
+		}
+	}
+	for (unsigned int i = 1; i <= p.b.Asize(); i++)
+	{
+		if (p.b.Ashow(i)->name.show() == name)
+		{
+			return p.b.Ashow(i);
+		}
+	}
+	for (unsigned int i = 1; i <= p.b.Usize(); i++)
+	{
+		if (p.b.Ushow(i)->name.show() == name)
+		{
+			return p.b.Ushow(i);
+		}
+	}
+
+	return nullptr;
 }
 bool isnumber(string str)
 {
@@ -750,4 +872,38 @@ void start(string title)
 	dio += static_cast<string>(title);
 	const char* cstr = dio.c_str();
 	system(cstr);
+}
+
+bool Place::set_father(Place* object)
+{
+	this->father = object;
+	return father == object;
+}
+
+bool Place::add(Place* object)
+{
+	son.push_back(object);
+	return son[son.size()-1] == object;
+}
+
+bool Place::sub(Place* object)
+{
+	auto it = remove(son.begin(), son.end(), object);
+	son.erase(it, son.end());
+
+	return false;
+}
+Place::Place() { }
+Place::Place(Place* F, vector<Place*> S) :father(F), son(S) {}
+
+Place::~Place() { }
+
+
+Event::Event()
+{
+
+}
+
+Event::~Event()
+{
 }

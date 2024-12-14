@@ -1,11 +1,14 @@
 #pragma once
 #include "joker.h"
 
+void cheat_bagshow(Item* item);
+
 void cheat()
 {
 	ti("控制台");
 	while (true)
 	{
+		cin.clear();
 		cout << endl;
 		cout << '>';
 		string args;
@@ -562,6 +565,7 @@ void cheat()
 								p.b.Wsub(p.b.Wshow(cmd[3]));
 								break;
 							case Item::Type::Armor:
+								p.b.Asub(p.b.Ashow(cmd[3]));
 								break;
 							case Item::Type::Usitem:
 								break;
@@ -600,61 +604,42 @@ void cheat()
 
 							}
 						}
+						cout << "防具" << endl;
+						if (p.b.Asize() <= 0)
+						{
+							cout << "无防具！" << endl;
+						}
+						else
+						{
+							for (int i = 1; i <= p.b.Asize(); i++)
+							{
+								cout << p.b.Ashow(i - 1)->name.show() << '(' << p.b.Ashow(i - 1)->id << ')' << '\n';
+							}
+						}
+						cout << "可使用物品" << endl;
+						if (p.b.Usize() <= 0)
+						{
+							cout << "无可使用物品！" << endl;
+						}
+						else
+						{
+							for (int i = 1; i <= p.b.Usize(); i++)
+							{
+								cout << p.b.Ushow(i - 1)->name.show() << '(' << p.b.Ushow(i - 1)->id << ')' << '\n';
+							}
+						}
 					}
 					else if (size == 4)
 					{
-
-
-						Item::Type type;
-						type = finditem(cmd[3])->typeshow();
-						switch (type)
+						if (p.b.show(cmd[3]) != nullptr)
 						{
-						case Item::Type::Item:
+							cheat_bagshow(p.b.show(cmd[3]));
+						}
+						else
 						{
-							if (p.b.Ishow(cmd[3]) != nullptr)
-							{
-								Item* i;
-								i = p.b.Ishow(cmd[3]);
-								cout << "物品名：" << i->name.show() << '\n'
-									<< "描述：" << i->des.show() << '\n'
-									<< "数量：" << i->num.show() << '\n'
-									<< "物品等级：" << i->lv.show() << '\n'
-									<< "使用等级：" << i->lv.showslv();
-							}
-							else
-							{
-								cout << "未找到物品！" << endl;;
-							}
+							cout << "未找到物品！" << endl;
 						}
-						break;
-						case Item::Type::Weapon:
-						{
-							if (p.b.Wshow(cmd[3]) != nullptr)
-							{
-								Weapon* i;
-								i = p.b.Wshow(cmd[3]);
-								cout << "武器名：" << i->name.show() << '\n'
-									<< "描述：" << i->des.show() << '\n'
-									<< "攻击力：" << i->atk << '\n'
-									<< "武器等级：" << i->lv.show() << '\n'
-									<< "使用等级：" << i->lv.showslv() << endl;
-							}
-							else
-							{
-								cout << "未找到物品！" << endl;
-							}
-						}
-						break;
-						case Item::Type::Armor:
-							break;
-						case Item::Type::Usitem:
-							break;
-						default:
-							break;
-						}
-
-
-
+						
 					}
 					else if (size == 5)
 					{
@@ -676,3 +661,158 @@ void cheat()
 		}
 	}
 }
+
+
+void cheat_bagshow(Item* item)
+{
+	Item::Type type;
+	type = item->typeshow();
+	switch (type)
+	{
+	case Item::Type::Item:
+	{
+		Item* i;
+		i = item;
+		cout << "物品名：" << i->name.show() << '\n'
+			<< "描述：" << i->des.show() << '\n'
+			<< "数量：" << i->num.show() << '\n'
+			<< "物品等级：" << i->lv.show() << '\n'
+			<< "使用等级：" << i->lv.showslv() << endl;
+
+		cout << "进行的操作：" << '\n'
+			<< " 1.丢弃\n 0.退出\n";
+		int choise;
+		cin >> choise;
+		switch (choise)
+		{
+		case 1:
+
+		default:
+			cout << "无效操作！" << endl;
+		}
+	}
+	break;
+	case Item::Type::Weapon:
+	{
+		Weapon* i;
+		i = dynamic_cast<Weapon*>(item);
+		cout << "武器名：" << i->name.show() << '\n'
+			<< "描述：" << i->des.show() << '\n'
+			<< "攻击力：" << i->atk << '\n'
+			<< "武器等级：" << i->lv.show() << '\n'
+			<< "使用等级：" << i->lv.showslv() << endl;
+	}
+		break;
+	case Item::Type::Armor:
+	{
+		Armor* i;
+		i = dynamic_cast<Armor*>(item);
+		cout << "防具名：" << i->name.show() << '\n'
+			<< "描述：" << i->des.show() << '\n'
+			<< "防御力：" << i->dfs << '\n'
+			<< "防具等级：" << i->lv.show() << '\n'
+			<< "使用等级：" << i->lv.showslv() << endl;
+	}
+		break;
+	case Item::Type::Usitem:
+	{
+		Usitem* i;
+		i = dynamic_cast<Usitem*>(item);
+		cout << "物品名：" << i->name.show() << '\n'
+			<< "描述：" << i->des.show() << '\n'
+			<< "物品等级：" << i->lv.show() << '\n'
+			<< "使用等级：" << i->lv.showslv() << endl;
+	}
+		break;
+	default:
+		break;
+	}
+
+}
+
+/*
+* Item::Type type;
+type = finditem(cmd[3])->typeshow();
+switch (type)
+{
+case Item::Type::Item:
+{
+				if (p.b.Ishow(cmd[3]) != nullptr)
+				{
+								Item* i;
+								i = p.b.Ishow(cmd[3]);
+								cout << "物品名：" << i->name.show() << '\n'
+									<< "描述：" << i->des.show() << '\n'
+									<< "数量：" << i->num.show() << '\n'
+									<< "物品等级：" << i->lv.show() << '\n'
+									<< "使用等级：" << i->lv.showslv();
+
+								cout << "进行的操作：" << '\n'
+									<< " 1.丢弃\n 0.退出\n";
+								int choise;
+								cin >> choise;
+								switch (choise)
+								{
+								case 1:
+
+								default:
+									cout << "无效操作！" << endl;
+
+								}
+				}
+				else
+				{
+								cout << "未找到物品！" << endl;;
+				}
+
+}
+break;
+case Item::Type::Weapon:
+{
+				if (p.b.Wshow(cmd[3]) != nullptr)
+				{
+								Weapon* i;
+								i = p.b.Wshow(cmd[3]);
+								cout << "武器名：" << i->name.show() << '\n'
+									<< "描述：" << i->des.show() << '\n'
+									<< "攻击力：" << i->atk << '\n'
+									<< "武器等级：" << i->lv.show() << '\n'
+									<< "使用等级：" << i->lv.showslv() << endl;
+				}
+				else
+				{
+								cout << "未找到物品！" << endl;
+				}
+}
+break;
+case Item::Type::Armor:
+				if (p.b.Ashow(cmd[3]) != nullptr)
+				{
+								Armor* i;
+								i = p.b.Ashow(cmd[3]);
+								cout << "防具名：" << i->name.show() << '\n'
+									<< "描述：" << i->des.show() << '\n'
+									<< "防御力：" << i->dfs << '\n'
+									<< "防具等级：" << i->lv.show() << '\n'
+									<< "使用等级：" << i->lv.showslv() << endl;
+				}
+				else
+				{
+								cout << "未找到物品！" << endl;
+				}
+				break;
+case Item::Type::Usitem:
+				if (p.b.Ushow(cmd[3]) != nullptr)
+				{
+								Usitem* i;
+								i = p.b.Ushow(cmd[3]);
+								cout << "物品名：" << i->name.show() << '\n'
+									<< "描述：" << i->des.show() << '\n'
+									<< "物品等级：" << i->lv.show() << '\n'
+									<< "使用等级：" << i->lv.showslv() << endl;
+				}
+				break;
+default:
+				break;
+}
+*/

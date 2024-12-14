@@ -144,10 +144,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cheat.h" />
-    <ClInclude Include="head\Item\aromor.h" />
+    <ClInclude Include="head\Event\Event.h" />
+    <ClInclude Include="head\Item\Aromor.h" />
     <ClInclude Include="head\Item\Item.h" />
+    <ClInclude Include="head\Item\Usitem.h" />
     <ClInclude Include="head\Item\wood.h" />
-    <ClInclude Include="head\Item\wood_sword.h" />
+    <ClInclude Include="head\Item\Weapon.h" />
+    <ClInclude Include="head\Place\place.h" />
     <ClInclude Include="joker.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

@@ -4,15 +4,23 @@
 class wood_sword :public Weapon
 {
 public:
-	void on() override
+	void on(Player* object) override
 	{
-		p.atk.add(atk);
+		object->atk.add(atk);
 	}
-	void down() override
+	void down(Player* object) override
 	{
-		p.atk.sub(atk);
+		object->atk.sub(atk);
 	}
-	void fight() override
+	void fightupdate() override
+	{
+
+	}
+	void fightend() override
+	{
+
+	}
+	void fightstart() override
 	{
 
 	}
