@@ -158,6 +158,7 @@
     <Text Include="data\lvupneednum.ini" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="joker_readme.md" />
     <None Include="readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

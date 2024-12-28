@@ -69,6 +69,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <None Include="joker_readme.md" />
     <None Include="readme.md" />
   </ItemGroup>
 </Project>

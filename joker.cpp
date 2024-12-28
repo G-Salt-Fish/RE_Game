@@ -25,102 +25,102 @@ Usitem::Usitem()
 {
 	type = Item::Type::Usitem;
 }
-bool Item::NAME::set(string come)
+bool NAME::set(string come)
 {
 	name = come;
 	return name == come;
 }
-string Item::NAME::show()
+string NAME::show()
 {
 	return name;
 }
-Item::NAME::NAME()
+NAME::NAME()
 {
 	name = "";
 }
-bool Item::DES::set(string come)
+bool DES::set(string come)
 {
 	des = come;
 	return des == come;
 }
-string Item::DES::show()
+string DES::show()
 {
 	return des;
 
 }
-Item::DES::DES()
+DES::DES()
 {
 	des = "";
 }
-bool Item::LV::set(int come)
+bool ILV::set(int come)
 {
 	lv = come;
 	return lv == come;
 }
-bool Item::LV::setslv(int come)
+bool ILV::setslv(int come)
 {
 	slv = come;
 	return slv == come;
 }
-bool Item::LV::add(int come)
+bool ILV::add(int come)
 {
 	int data = lv;
 	lv += come;
 	return lv - come == data;
 }
-bool Item::LV::addslv(int come)
+bool ILV::addslv(int come)
 {
 	int data = slv;
 	slv += come;
 	return slv - come == data;
 }
-bool Item::LV::sub(int come)
+bool ILV::sub(int come)
 {
 	int data = lv;
 	lv -= come;
 	return lv + come == data;
 }
-bool Item::LV::subslv(int come)
+bool ILV::subslv(int come)
 {
 	int data = slv;
 	slv -= come;
 	return slv + come == data;
 }
-int Item::LV::show()
+int ILV::show()
 {
 	return lv;
 }
-int Item::LV::showslv()
+int ILV::showslv()
 {
 	return slv;
 }
-Item::LV::LV()
+ILV::ILV()
 {
 	lv = 0;
 	slv = 0;
 }
-bool Item::NUM::set(int come)
+bool NUM::set(int come)
 {
 	num = come;
 	return num == come;
 }
-bool Item::NUM::add(int come)
+bool NUM::add(int come)
 {
 	int data = num;
 	num += come;
 	return num - come == data;
 }
-bool Item::NUM::sub(int come)
+bool NUM::sub(int come)
 {
 	int data = num;
 	num -= come;
 	return num + come == data;
 }
-int Item::NUM::show()
+int NUM::show()
 {
 	return num;
 }
-Item::NUM::NUM()
+NUM::NUM()
 {
 	num = 1;
 }
@@ -491,7 +491,7 @@ Item* Bag::show(string name)
 		return nullptr;
 	}
 
-	//从背包中通过名称查找物品
+	//从背包中查找物品
 	if (p.b.Ishow(name) != nullptr)
 	{
 		return p.b.Ishow(name);
@@ -534,28 +534,28 @@ Bag::~Bag()
 	}
 }
 
-Player::COLOR::Color stcolor(const string& str)
+COLOR::Color stcolor(const string& str)
 {
-	static map<string, Player::COLOR::Color> enumMap =
+	static map<string, COLOR::Color> enumMap =
 	{
-		{"bule",Player::COLOR::Color::bule},
-		{"green",Player::COLOR::Color::green},
-		{"lessgreen",Player::COLOR::Color::lessgreen},
-		{"red",Player::COLOR::Color::red},
-		{"purpel",Player::COLOR::Color::purpel},
-		{"yellow",Player::COLOR::Color::yellow},
-		{"white",Player::COLOR::Color::white},
-		{"grey",Player::COLOR::Color::grey},
-		{"lessbule",Player::COLOR::Color::lessbule}
+		{"bule",COLOR::Color::bule},
+		{"green",COLOR::Color::green},
+		{"lessgreen",COLOR::Color::lessgreen},
+		{"red",COLOR::Color::red},
+		{"purpel",COLOR::Color::purpel},
+		{"yellow",COLOR::Color::yellow},
+		{"white",COLOR::Color::white},
+		{"grey",COLOR::Color::grey},
+		{"lessbule",COLOR::Color::lessbule}
 	};
-	map<std::string, Player::COLOR::Color>::iterator it = enumMap.find(str);
+	map<std::string, COLOR::Color>::iterator it = enumMap.find(str);
 	if (it != enumMap.end())
 	{
 		return it->second;
 	}
 	else
 	{
-		return Player::COLOR::Color::white;
+		return COLOR::Color::white;
 	}
 }
 bool bfinditem(string name) 
@@ -586,28 +586,28 @@ Item* finditem(string name)
 Item* bagfinditem(string name)
 {
 	//从背包中通过名称查找物品
-	for (unsigned int i = 1; i <= p.b.Isize(); i++)
+	for (int i = 1; i <= p.b.Isize(); i++)
 	{
 		if (p.b.Ishow(i)->name.show() == name)
 		{
 			return p.b.Ishow(i);
 		}
 	}
-	for (unsigned int i = 1; i <= p.b.Wsize(); i++)
+	for (int i = 1; i <= p.b.Wsize(); i++)
 	{
 		if (p.b.Wshow(i)->name.show() == name)
 		{
 			return p.b.Wshow(i);
 		}
 	}
-	for (unsigned int i = 1; i <= p.b.Asize(); i++)
+	for (int i = 1; i <= p.b.Asize(); i++)
 	{
 		if (p.b.Ashow(i)->name.show() == name)
 		{
 			return p.b.Ashow(i);
 		}
 	}
-	for (unsigned int i = 1; i <= p.b.Usize(); i++)
+	for (int i = 1; i <= p.b.Usize(); i++)
 	{
 		if (p.b.Ushow(i)->name.show() == name)
 		{
@@ -628,108 +628,111 @@ bool isnumber(string str)
 			return std::isdigit(c);
 		});
 }
-bool Player::NAME::set(string come)
+bool isItemId(string str)
 {
-	name = come;
-	return name == come;
+	auto it = ItemMap.find(str);
+	if (it != ItemMap.end())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	return false;
 }
-string Player::NAME::show()
-{
-	return name;
-}
-Player::NAME::NAME() :name("G-Salt-Fish") {}
-bool Player::ATK::set(int come)
+bool ATK::set(int come)
 {
 	atk = come;
 	return atk == come;
 }
-bool Player::ATK::add(int come)
+bool ATK::add(int come)
 {
 	int data;
 	data = atk;
 	atk += come;
 	return atk - come == data;
 }
-bool Player::ATK::sub(int come)
+bool ATK::sub(int come)
 {
 	int data;
 	data = atk;
 	atk -= come;
 	return atk + come == data;
 }
-int Player::ATK::show()
+int ATK::show()
 {
 	return atk;
 }
-Player::ATK::ATK() :atk(2) {}
-bool Player::DFS::set(int come)
+ATK::ATK() :atk(2) {}
+bool DFS::set(int come)
 {
 	dfs = come;
 	return dfs == come;
 }
-bool Player::DFS::add(int come)
+bool DFS::add(int come)
 {
 	int data;
 	data = dfs;
 	dfs += come;
 	return dfs - come == data;
 }
-bool Player::DFS::sub(int come)
+bool DFS::sub(int come)
 {
 	int data;
 	data = dfs;
 	dfs -= come;
 	return dfs + come == data;
 }
-int Player::DFS::show()
+int DFS::show()
 {
 	return dfs;
 }
-Player::DFS::DFS() :dfs(0) {}
-bool Player::HP::setmax(int come)
+DFS::DFS() :dfs(0) {}
+bool HP::setmax(int come)
 {
 	mhp = come;
 	return mhp == come;
 }
-bool Player::HP::set(int come)
+bool HP::set(int come)
 {
 	hp = come;
 	return hp == come;
 }
-bool Player::HP::addmax(int come)
+bool HP::addmax(int come)
 {
 	int data = mhp;
 	mhp += come;
 	return mhp - come == data;
 }
-bool Player::HP::add(int come)
+bool HP::add(int come)
 {
 	int data = hp;
 	hp += come;
 	return hp - come == data;
 }
-bool Player::HP::submax(int come)
+bool HP::submax(int come)
 {
 	int data = mhp;
 	mhp -= come;
 	return mhp + come == data;
 }
-bool Player::HP::sub(int come)
+bool HP::sub(int come)
 {
 	int data = hp;
 	hp -= come;
 	return hp + come == data;
 }
-int Player::HP::showmax()
+int HP::showmax()
 {
 	return mhp;
 }
-int Player::HP::show()
+int HP::show()
 {
 	return hp;
 }
-Player::HP::HP() : hp(100), mhp(100) {}
-void Player::COLOR::set(Color come)
+HP::HP() : hp(100), mhp(100) {}
+void COLOR::set(Color come)
 {
 	color = come;
 	string dio;
@@ -738,63 +741,63 @@ void Player::COLOR::set(Color come)
 	const char* cstr = dio.c_str();
 	system(cstr);
 }
-Player::COLOR::Color Player::COLOR::show()
+COLOR::Color COLOR::show()
 {
 	return color;
 }
-Player::COLOR::COLOR() :color(Color::white) {}
-bool Player::LV::set(int come)
+COLOR::COLOR() :color(Color::white) {}
+bool LV::set(int come)
 {
 	lv = come;
 	return lv == come;
 }
-bool Player::LV::setxp(int come)
+bool LV::setxp(int come)
 {
 	xp = come;
 	return xp == come;
 }
-bool Player::LV::setmxp(int come)
+bool LV::setmxp(int come)
 {
 	mxp = come;
 	return mxp == come;
 }
-bool Player::LV::add(int come)
+bool LV::add(int come)
 {
 	int data = lv;
 	lv += come;
 	return lv - come == data;
 }
-bool Player::LV::addxp(int come)
+bool LV::addxp(int come)
 {
 	int data = xp;
 	xp += come;
 	return xp - come == data;
 }
-bool Player::LV::addmxp(int come)
+bool LV::addmxp(int come)
 {
 	int data = mxp;
 	mxp += come;
 	return mxp - come == data;
 }
-bool Player::LV::sub(int come)
+bool LV::sub(int come)
 {
 	int data = lv;
 	lv -= come;
 	return lv + come == data;
 }
-bool Player::LV::subxp(int come)
+bool LV::subxp(int come)
 {
 	int data = xp;
 	xp -= come;
 	return xp + come == data;
 }
-bool Player::LV::submxp(int come)
+bool LV::submxp(int come)
 {
 	int data = mxp;
 	mxp -= come;
 	return mxp + come == data;
 }
-int Player::LV::lvupneed()
+int LV::lvupneed()
 {
 	string path = "data\\lvupneednum.ini";
 	fstream f(path, ios::in);
@@ -806,7 +809,7 @@ int Player::LV::lvupneed()
 	f.close();
 	return need;
 }
-bool Player::LV::lvup()
+bool LV::lvup()
 {
 	bool ifup = false;
 	mxp = lvupneed();
@@ -817,47 +820,47 @@ bool Player::LV::lvup()
 	}
 	return ifup;
 }
-int Player::LV::show()
+int LV::show()
 {
 	return lv;
 }
-int Player::LV::showlv()
+int LV::showlv()
 {
 	return show();
 }
-int Player::LV::showxp()
+int LV::showxp()
 {
 	return xp;
 }
-int Player::LV::showmxp()
+int LV::showmxp()
 {
 	mxp = lvupneed();
 	return mxp;
 }
-bool Player::MONEY::set(int come)
+bool MONEY::set(int come)
 {
 	mon = come;
 	return mon == come;
 }
-bool Player::MONEY::add(int come)
+bool MONEY::add(int come)
 {
 	int data = mon;
 	mon += come;
 	return mon - come == data;
 }
-bool Player::MONEY::sub(int come)
+bool MONEY::sub(int come)
 {
 	int data = mon;
 	mon -= come;
 	return mon + come == data;
 }
-int Player::MONEY::show()
+int MONEY::show()
 {
 	return mon;
 }
-Player::MONEY::MONEY() :mon(0) {}
-Player::LV::LV() : lv(1), xp(0), mxp(10) {}
-Player::GEAR::GEAR() : gear(0),maxgear(6) {}
+MONEY::MONEY() :mon(0) {}
+LV::LV() : lv(1), xp(0), mxp(10) {}
+GEAR::GEAR() : gear(0),maxgear(6) {}
 Player::Player() {}
 void ti(string come)
 {
@@ -893,7 +896,7 @@ bool Place::sub(Place* object)
 
 	return false;
 }
-Place::Place() { }
+Place::Place() :father(nullptr), son() { }
 Place::Place(Place* F, vector<Place*> S) :father(F), son(S) {}
 
 Place::~Place() { }
@@ -906,4 +909,9 @@ Event::Event()
 
 Event::~Event()
 {
+}
+
+Character::Character()
+{
+	name.set("Mouse");
 }

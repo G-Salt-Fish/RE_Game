@@ -42,7 +42,10 @@ void cheat()
 		{
 			if (size >= 2)
 			{
-				Player::COLOR::Color temp;
+				
+				
+				
+				COLOR::Color temp;
 				temp = p.color.show();
 				p.color.set(stcolor(cmd[1]));
 				if (p.color.show() != temp)

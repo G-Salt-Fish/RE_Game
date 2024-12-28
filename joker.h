@@ -17,8 +17,6 @@
 #include<cctype>
 #include<algorithm>
 
-#include "head\Place\place.h"
-
 #define pause system("pause")
 #define cls system("cls")
 using Unint = unsigned int;
@@ -39,6 +37,7 @@ class Bag;
 class Weapon;
 class Event;
 class Place;
+class Character;
 
 #define NEW_ITEM(T) \
 	ItemMap[#T] = []() -> Item* { return new T; }; 
@@ -50,6 +49,155 @@ extern map<string, Item* (*)()> ItemMap;
 
 extern map<string, Item* (*)()> ItemNameMap;
 
+
+class NAME
+{
+private:
+	string name;
+public:
+	bool set(string come);
+	string show();
+	NAME();
+};
+class DES
+{
+private:
+	string des;
+public:
+	bool set(string come);
+	string show();
+	DES();
+};
+class LV
+{
+private:
+	int lv;//等级 
+	int xp;//经验 
+	int mxp;//升级经验 
+public:
+	bool set(int come);
+	bool setxp(int come);
+	bool setmxp(int come);
+	bool add(int come);
+	bool addxp(int come);
+	bool addmxp(int come);
+	bool sub(int come);
+	bool subxp(int come);
+	bool submxp(int come);
+	int lvupneed();
+	bool lvup();
+	int show();
+	int showlv();
+	int showxp();
+	int showmxp();
+	LV();
+};
+class ILV
+{
+private:
+	int lv;
+	int slv;//物品使用等级
+public:
+	bool set(int come);
+	bool setslv(int come);
+	bool add(int come);
+	bool addslv(int come);
+	bool sub(int come);
+	bool subslv(int come);
+	int show();
+	int showslv();
+	ILV();
+};
+class HP
+{
+private:
+	int hp;//血量
+	int mhp;//血量上限 
+public:
+	bool setmax(int come);
+	bool set(int come);
+	bool addmax(int come);
+	bool add(int come);
+	bool submax(int come);
+	bool sub(int come);
+	int showmax();
+	int show();
+	HP();
+};
+class ATK
+{
+private:
+	int atk;
+public:
+	bool set(int come);
+	bool add(int come);
+	bool sub(int come);
+	int show();
+	ATK();
+};
+class DFS
+{
+private:
+	int dfs;
+public:
+	bool set(int come);
+	bool add(int come);
+	bool sub(int come);
+	int show();
+	DFS();
+};
+class MONEY
+{
+private:
+	int mon;
+public:
+	bool set(int come);
+	bool add(int come);
+	bool sub(int come);
+	int show();
+	MONEY();
+};
+class GEAR
+{
+private:
+	int gear;
+	int maxgear;
+public:
+	GEAR();
+};
+class NUM
+{
+private:
+	int num;
+public:
+	bool set(int come);
+	bool add(int come);
+	bool sub(int come);
+	int show();
+	NUM();
+};
+class COLOR
+{
+public:
+	enum class Color :char
+	{
+		bule = '9',
+		green = 'a',
+		lessgreen = '2',
+		red = '4',
+		purpel = '5',
+		yellow = '6',
+		white = '7',
+		grey = '8',
+		lessbule = 'b'
+	};
+private:
+	Color color;
+public:
+	void set(Color come);
+	Color show();
+	COLOR();
+};
 
 
 class Event
@@ -103,54 +251,13 @@ private:
 	
 public:
 	string id;
-	class NAME
-	{
-	private:
-		string name;
-	public:
-		bool set(string come);
-		string show();
-		NAME();
-	}name;//名字  
+	NAME name;//名字
 
-	class DES
-	{
-	private:
-		string des;
-	public:
-		bool set(string come);
-		string show();
-		DES();
-	}des;//描述
+	DES des;//描述
 
-	class LV
-	{
-	private:
-		int lv;
-		int slv;//物品使用等级
-	public:
-		bool set(int come);
-		bool setslv(int come);
-		bool add(int come);
-		bool addslv(int come);
-		bool sub(int come);
-		bool subslv(int come);
-		int show();
-		int showslv();
-		LV();
-	}lv;//物品等级 
+	ILV lv;//物品等级 
 
-	class NUM
-	{
-	private:
-		int num;
-	public:
-		bool set(int come);
-		bool add(int come);
-		bool sub(int come);
-		int show();
-		NUM();
-	}num;//物品数量  
+	NUM num;//物品数量  
 
 	virtual Type typeshow();
 
@@ -233,133 +340,54 @@ class Player
 {
 public:
 	Bag b;
-	class NAME
-	{
-	private:
-		string name;
-	public:
-		bool set(string come);
-		string show();
-		NAME();
-	}name;//名字
+	NAME name;//名字
 
-	class ATK
-	{
-	private:
-		int atk;
-	public:
-		bool set(int come);
-		bool add(int come);
-		bool sub(int come);
-		int show();
-		ATK();
-	}atk;//攻击 
+	ATK atk;//攻击 
 
-	class DFS
-	{
-	private:
-		int dfs;
-	public:
-		bool set(int come);
-		bool add(int come);
-		bool sub(int come);
-		int show();
-		DFS();
-	}dfs;//防御 
+	DFS dfs;//防御 
 
-	class HP
-	{
-	private:
-		int hp;//血量
-		int mhp;//血量上限 
-	public:
-		bool setmax(int come);
-		bool set(int come);
-		bool addmax(int come);
-		bool add(int come);
-		bool submax(int come);
-		bool sub(int come);
-		int showmax();
-		int show();
-		HP();
-	}hp;//血量
+	HP hp;//血量
 
-	class LV
-	{
-	private:
-		int lv;//等级 
-		int xp;//经验 
-		int mxp;//升级经验 
-	public:
-		bool set(int come);
-		bool setxp(int come);
-		bool setmxp(int come);
-		bool add(int come);
-		bool addxp(int come);
-		bool addmxp(int come);
-		bool sub(int come);
-		bool subxp(int come);
-		bool submxp(int come);
-		int lvupneed();
-		bool lvup();
-		int show();
-		int showlv();
-		int showxp();
-		int showmxp();
-		LV();
-	}lv;//等级
+	LV lv;//等级
 
-	class COLOR
-	{
-	public:
-		enum class Color :char
-		{
-			bule = '9',
-			green = 'a',
-			lessgreen = '2',
-			red = '4',
-			purpel = '5',
-			yellow = '6',
-			white = '7',
-			grey = '8',
-			lessbule = 'b'
-		};
-	private:
-		Color color;
-	public:
-		void set(Color come);
-		Color show();
-		COLOR();
-	}color;//颜色
+	COLOR color;//颜色
 
-	class MONEY
-	{
-	private:
-		int mon;
-	public:
-		bool set(int come);
-		bool add(int come);
-		bool sub(int come);
-		int show();
-		MONEY();
-	}mon;//金钱 
+	MONEY mon;//金钱 
 
-	class GEAR
-	{
-	private:
-		int gear;
-		int maxgear;
-	public:
-		GEAR();
-	}gear;//装备数量
+	GEAR gear;//装备数量
 
 	
 	Player();
 };
+
+class Character
+{
+public:
+	Bag b;
+
+	NAME name;//名字
+
+	ATK atk;//攻击 
+
+	DFS dfs;//防御 
+
+	HP hp;//血量
+
+	LV lv;//等级
+
+	MONEY mon;//金钱 
+
+	GEAR gear;//装备数量
+
+	Character();
+};
+
+
 extern Player p;
 void ti(string come);
-Player::COLOR::Color stcolor(const std::string& str);
+COLOR::Color stcolor(const std::string& str);
 void start(string title);
 bool bfinditem(string name);//查找物品是否在数据库中
 Item* finditem(string name);//返回物品在数据库中的指针
 bool isnumber(string str);
+bool isItemId(string str);
